@@ -1,0 +1,45 @@
+---
+title: "Rmarkdown_example"
+author: "Jeremy Hogeveen"
+date: "2026-03-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# boilerplate knitr step
+knitr::opts_chunk$set(echo = TRUE)
+# Load tidyverse
+library(tidyverse)
+```
+
+## R Markdown
+
+* This is an `R` Markdown document. 
+* using the default output of `.html`, though `.pdf` is also an option.
+* We're going to run the same steps as our RStudio example, but showing how it looks in Markdown
+  * same principles / formatting as Jupyter lab `markdown` chunks!
+
+```{r simulate_data}
+# Simulate some RTs on an explore-exploit task
+set.seed(42)
+task_data <- tibble(
+  trial = 1:100,
+  condition = rep(c("Explore", "Exploit"), each = 50),
+  rt_ms = c(rnorm(50, mean = 650, sd = 100), rnorm(50, mean = 400, sd = 80))
+)
+
+# Look at the first few rows
+head(task_data)
+```
+
+## Plotting the data
+
+* Now, when we run our ggplot2 code, the code and plots will appear in sequence in the markdown output.
+
+```{r plot_data}
+# Plot the results
+ggplot(task_data, aes(x = condition, y = rt_ms, fill = condition)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Reaction Times: Explore vs. Exploit", y = "Reaction Time (ms)")
+```
